@@ -45,7 +45,6 @@ spring:
             multi-statement-allow: true
 
 
-
 #mybatis plus
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
@@ -78,3 +77,5 @@ mybatis-plus:
 
 server:
   port: 7000
+
+
