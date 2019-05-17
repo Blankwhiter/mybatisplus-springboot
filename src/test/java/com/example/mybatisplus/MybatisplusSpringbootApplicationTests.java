@@ -1,7 +1,11 @@
 package com.example.mybatisplus;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mybatisplus.entity.User;
 import com.example.mybatisplus.mapper.UserMapper;
+import com.example.mybatisplus.service.UserService;
+import org.crazycake.shiro.RedisManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,9 @@ public class MybatisplusSpringbootApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserService userService;
 
     @Test
     public void addUser() {
@@ -54,7 +61,30 @@ public class MybatisplusSpringbootApplicationTests {
     @Test
     public void selectUser() {
         List<User> users = userMapper.selectList(null);
-        users.stream().map(User::getName).forEach(System.out::println);//打印出所用用户名字
+        users.stream().map(User::getName).forEach(System.out::println);//打印出所有用户名字
+    }
+    @Test
+    public void selectUserByPage() {
+        Page<User> page = new Page<>();
+        page.setCurrent(1);
+        page.setSize(2);
+        IPage<User> userIPage = userMapper.selectPage(page, null);
+        List<User> users = userIPage.getRecords();
+        users.stream().map(User::getName).forEach(System.out::println);//打印出所有用户名字
     }
 
+    @Test
+    public void selectOne(){
+        User jone = userService.findUserByName("Jone");
+        System.out.println(jone.getPassword());
+    }
+
+    @Autowired
+    RedisManager redisManager;
+
+    @Test
+    public void redis(){
+        System.out.println(redisManager.getHost());
+        System.out.println();
+    }
 }

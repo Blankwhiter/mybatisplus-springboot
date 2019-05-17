@@ -1,6 +1,6 @@
 
 
-
+#数据库配置
 spring:
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure  # 为了某些版本的springboot  @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class}) 无法生效
@@ -79,3 +79,15 @@ server:
   port: 7000
 
 
+
+
+shiro:
+  redis:
+    host: 127.0.0.1:6379
+    database: 7
+#    如果没有密码 请注释掉password
+#    password:
+    timeOut: 60000
+  session:
+#    session 超时时间 -- 设置的时间单位是:ms，但是Shiro会把这个时间转成:s，而且是会舍掉小数部分，这样我设置的是-1ms，转成s后就是0s，马上就过期了。所有要是除以1000以后还是负数，必须设置小于-1000
+    timeOut: 60000
